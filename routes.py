@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request, send_file, make_response
 import os
 import csv
 import requests
+from dotenv import load_dotenv
 from openai import OpenAI
 
 UPLOAD_DIR = "/home/mt798jx/uploads"
@@ -343,7 +344,10 @@ def process_file_gemini():
 
     return jsonify(result_chunks), 200
 
-client = OpenAI(api_key="sk-proj-FrY06JjHaOzQZjTejQUeT3BlbkFJ6RG42qREbT5suj8K6bvw")
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key)
+print("API Key:", api_key)
 
 def process_chatgpt_response(response):
     results = []
